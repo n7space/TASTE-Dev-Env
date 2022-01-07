@@ -12,6 +12,11 @@ LABEL DESCRIPTION="Build environment for additional TASTE tools"
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=true
 
+ENV WORKSPACE_DIR=/workspace
+
+# Set workspace
+WORKDIR ${WORKSPACE_DIR}
+
 # Setup apt dependencies
 RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     apt-transport-https \
@@ -38,12 +43,11 @@ RUN pip3 install \
     pytest
 
 #  Hack antlr3 as required by opengeode
-RUN mkdir -p tmp \
-    && cd /tmp \
-    && wget -q -O - https://download.tuxfamily.org/taste/antlr3_python3_runtime_3.4.tar.bz2 | tar jxpvf - \
+RUN wget -q -O - https://download.tuxfamily.org/taste/antlr3_python3_runtime_3.4.tar.bz2 | tar jxpvf - \
     && cd antlr3_python3_runtime_3.4 \
     && python3 -m pip install --upgrade . \
-    && rm -rf /tmp/antlr3_python3_runtime_3.4
+    && cd .. \
+    && rm -rf antlr3_python3_runtime_3.4
 
 # Install MS sources
 RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb \
@@ -61,7 +65,7 @@ RUN git clone https://github.com/ttsiodras/asn1scc.git \
     && cd asn1scc && dotnet build "asn1scc.sln"
 
 # Setup paths for the image end-user
-ENV PATH="/asn1scc/asn1scc/bin/Debug/net5.0/:${PATH}"
+ENV PATH="${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net5.0/:${PATH}"
 
 # Execute tests to see if the image is valid
 RUN opengeode --help
