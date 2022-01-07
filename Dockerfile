@@ -9,15 +9,18 @@ LABEL VENDOR="N7 Space"
 LABEL ARTEFACT="TASTE Development Environment"
 LABEL DESCRIPTION="Build environment for additional TASTE tools"
 
-ENV DEBIAN_FRONTEND=noninteractive 
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Setup apt dependencies
-RUN apt-get update && apt-get install -y \    
+RUN apt-get update && apt-get install -y \
+    git \
+    libglu1-mesa-dev \
+    make \
     python3-pexpect \
     python3-pip \
     python3-pygraphviz \
     python3-singledispatch \
-    python3-stringtemplate3 \    
+    python3-stringtemplate3 \
     spin \
     wget
 
