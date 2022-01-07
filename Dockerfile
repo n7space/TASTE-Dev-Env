@@ -33,4 +33,8 @@ RUN pip3 install \
     pytest
 
 #  Hack antlr3 as required by opengeode
-RUN mkdir -p tmp ;	cd /tmp ; wget -q -O - https://download.tuxfamily.org/taste/antlr3_python3_runtime_3.4.tar.bz2 | tar jxpvf - ; cd antlr3_python3_runtime_3.4 ; python3 -m pip install --user --upgrade .
+RUN mkdir -p tmp ;	cd /tmp ; wget -q -O - https://download.tuxfamily.org/taste/antlr3_python3_runtime_3.4.tar.bz2 | tar jxpvf - ; cd antlr3_python3_runtime_3.4 ; python3 -m pip install --upgrade .
+
+# DELETE ME 
+RUN git clone https://github.com/n7space/sdl2promela.git
+RUN cd sdl2promela && make check
