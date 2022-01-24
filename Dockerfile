@@ -39,7 +39,6 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
 RUN pip3 install \
     black==21.10b0 \
     multipledispatch \
-    opengeode \
     pyside2 \
     pytest
 
@@ -63,10 +62,15 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
 
 # Compile asn1scc
 RUN git clone https://github.com/ttsiodras/asn1scc.git \
-    && cd asn1scc && dotnet build "asn1scc.sln"
+	&& cd asn1scc && dotnet build "asn1scc.sln"
 
 # Setup paths for the image end-user
 ENV PATH="${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net5.0/:${PATH}"
+
+# Install opengeode
+RUN git clone https://gitrepos.estec.esa.int/taste/opengeode.git \
+    && cd opengeode && make install
+
 
 # Execute tests to see if the image is valid
 RUN opengeode --help
