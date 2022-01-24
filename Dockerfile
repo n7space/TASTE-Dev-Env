@@ -62,7 +62,7 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
 
 # Compile asn1scc
 RUN git clone https://github.com/ttsiodras/asn1scc.git \
-	&& cd asn1scc && dotnet build "asn1scc.sln"
+	 && cd asn1scc && dotnet build "asn1scc.sln"
 
 # Setup paths for the image end-user
 ENV PATH="${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net5.0/:${PATH}"
