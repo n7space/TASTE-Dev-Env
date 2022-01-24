@@ -57,20 +57,19 @@ RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod
 # Install .NET 5.0
 # This cannot be merged with the previous apt-get due to the need for wget
 RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
-    dotnet-sdk-5.0 \
+    dotnet-sdk-6.0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Compile asn1scc
 RUN git clone https://github.com/ttsiodras/asn1scc.git \
     && cd asn1scc && dotnet build "asn1scc.sln"
 
-# Setup paths for the image end-user
-ENV PATH="${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net5.0/:${PATH}"
-
 # Install opengeode
 RUN git clone https://gitrepos.estec.esa.int/taste/opengeode.git \
     && cd opengeode && make install
 
+# Setup paths for the image end-user
+ENV PATH="/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
 
 # Execute tests to see if the image is valid
 RUN opengeode --help
