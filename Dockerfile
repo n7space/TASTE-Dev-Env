@@ -66,9 +66,9 @@ RUN git clone https://github.com/ttsiodras/asn1scc.git \
 
 # Install opengeode
 RUN git clone https://gitrepos.estec.esa.int/taste/opengeode.git \
-	&& cd opengeode \
-	&& pyside2-rcc opengeode.qrc -o opengeode/icons.py \
-	&& python3 -m pip install --upgrade .
+    && cd opengeode \
+    && pyside2-rcc opengeode.qrc -o opengeode/icons.py \
+    && python3 -m pip install --upgrade .
 
 # Setup paths for the image end-user
 ENV PATH="${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
