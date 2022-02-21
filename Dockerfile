@@ -21,6 +21,7 @@ WORKDIR ${WORKSPACE_DIR}
 RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     apt-transport-https \
     bzip2 \
+    build-essential \
     gcc \
     git \
     libglu1-mesa-dev \
