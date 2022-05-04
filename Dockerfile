@@ -25,6 +25,8 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     gcc \
     git \
     libglu1-mesa-dev \
+    libxkbcommon-0 \
+    libxkbcommon-x11-0 \
     make \
     openjdk-11-jre \
     python3-pexpect \
