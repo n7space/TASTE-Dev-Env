@@ -41,6 +41,7 @@ RUN pip3 install \
     black==21.10b0 \
     multipledispatch \
     pyside2 \
+    pyside6 \
     pytest
 
 #  Hack antlr3 as required by opengeode
