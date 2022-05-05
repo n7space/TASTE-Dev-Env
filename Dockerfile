@@ -41,6 +41,7 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
 # Setup python dependencies
 RUN pip3 install \
     black==21.10b0 \
+    click==8.0.2 \
     multipledispatch \
     pyside2 \
     pyside6 \
@@ -80,3 +81,4 @@ ENV PATH="/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${
 RUN opengeode --help
 RUN python3 -c "import opengeode"
 RUN asn1scc --version
+RUN black --version
