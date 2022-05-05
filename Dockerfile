@@ -25,6 +25,8 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     gcc \
     git \
     libglu1-mesa-dev \
+    libxkbcommon0 \
+    libxkbcommon-x11-0 \
     make \
     openjdk-11-jre \
     python3-pexpect \
@@ -41,6 +43,7 @@ RUN pip3 install \
     black==21.10b0 \
     multipledispatch \
     pyside2 \
+    pyside6 \
     pytest
 
 #  Hack antlr3 as required by opengeode
@@ -68,11 +71,10 @@ RUN git clone https://github.com/ttsiodras/asn1scc.git \
 # Install opengeode
 RUN git clone https://gitrepos.estec.esa.int/taste/opengeode.git \
     && cd opengeode \
-    && pyside2-rcc opengeode.qrc -o opengeode/icons.py \
-    && python3 -m pip install --upgrade .
+    && make install
 
 # Setup paths for the image end-user
-ENV PATH="${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
+ENV PATH="/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
 
 # Execute tests to see if the image is valid
 RUN opengeode --help
