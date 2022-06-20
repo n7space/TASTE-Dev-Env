@@ -77,6 +77,7 @@ RUN git clone https://gitrepos.estec.esa.int/taste/opengeode.git \
 # Setup paths for the image end-user
 ENV PATH="/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
 
+
 # Execute tests to see if the image is valid
 RUN opengeode --help
 RUN python3 -c "import opengeode"
