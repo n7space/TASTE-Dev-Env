@@ -76,7 +76,7 @@ RUN git clone https://gitrepos.estec.esa.int/taste/opengeode.git \
     && cd opengeode \
     && PATH=~/.local/bin:"${PATH}" && pyside6-rcc opengeode.qrc -o opengeode/icons.py &&  python3 -m pip install --upgrade .
 
-# Download RTEMS and install example C application
+# Download RTEMS and compile example C application
 RUN wget -q https://rtems-qual.io.esa.int/public_release/rtems-6-sparc-gr712rc-smp-4.tar.xz \
     && tar -xf rtems-6-sparc-gr712rc-smp-4.tar.xz -C /opt \
     && rm -f rtems-6-sparc-gr712rc-smp-4.tar.xz \
