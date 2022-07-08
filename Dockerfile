@@ -25,10 +25,12 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     gcc \
     git \
     libglu1-mesa-dev \
+    libncurses5 \
     libxkbcommon0 \
     libxkbcommon-x11-0 \
     make \
     openjdk-11-jre \
+    pkg-config \
     python3-pexpect \
     python3-pip \
     python3-pygraphviz \
@@ -36,8 +38,6 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     python3-stringtemplate3 \
     spin \
     wget \
-    libncurses5 \
-    pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup python dependencies
@@ -78,18 +78,17 @@ RUN git clone https://gitrepos.estec.esa.int/taste/opengeode.git \
     && cd opengeode \
     && PATH=~/.local/bin:"${PATH}" && pyside6-rcc opengeode.qrc -o opengeode/icons.py &&  python3 -m pip install --upgrade .
 
-# Download RTEMS and compile example C application
+# Download RTEMS
 RUN wget -q https://rtems-qual.io.esa.int/public_release/rtems-6-sparc-gr712rc-smp-4.tar.xz \
     && tar -xf rtems-6-sparc-gr712rc-smp-4.tar.xz -C /opt \
-    && rm -f rtems-6-sparc-gr712rc-smp-4.tar.xz \
-    && cd /opt/rtems-6-sparc-gr712rc-smp-4/src/example \
-    && make
+    && rm -f rtems-6-sparc-gr712rc-smp-4.tar.xz
 
 # Setup paths for the image end-user
-ENV PATH="/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
+ENV PATH="/opt/rtems-6-sparc-gr712rc-smp-4/bin:/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
 
 # Execute tests to see if the image is valid
 RUN opengeode --help
 RUN python3 -c "import opengeode"
 RUN asn1scc --version
 RUN black --version
+RUN cd /opt/rtems-6-sparc-gr712rc-smp-4/src/example && make
