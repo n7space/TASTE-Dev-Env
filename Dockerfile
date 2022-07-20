@@ -20,6 +20,9 @@ WORKDIR ${WORKSPACE_DIR}
 # Setup apt dependencies
 RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     apt-transport-https \
+    autoconf \
+    autotools-dev \
+    automake \
     bzip2 \
     build-essential \
     gcc \
@@ -28,6 +31,7 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     libncurses5 \
     libxkbcommon0 \
     libxkbcommon-x11-0 \
+    libtool \
     make \
     openjdk-11-jre \
     pkg-config \
@@ -78,13 +82,29 @@ RUN git clone https://gitrepos.estec.esa.int/taste/opengeode.git \
     && cd opengeode \
     && PATH=~/.local/bin:"${PATH}" && pyside6-rcc opengeode.qrc -o opengeode/icons.py &&  python3 -m pip install --upgrade .
 
+# Install CppUTest
+RUN git clone --branch v4.0 --depth 1 https://github.com/cpputest/cpputest.git \
+    && cd cpputest/ \
+    && mkdir -p /opt/cpputest \
+    && mkdir -p build_cpputest \
+    && cd build_cpputest \
+    && autoreconf .. -i \
+    && ../configure \
+       --prefix=/opt/cpputest \
+       --enable-std-cpp17 \
+       --disable-memory-leak-detection \
+    && make \
+    && make install \
+    && cd ../.. \
+    && rm -rf cpputest
+
 # Download RTEMS
 RUN wget -q https://rtems-qual.io.esa.int/public_release/rtems-6-sparc-gr712rc-smp-4.tar.xz \
     && tar -xf rtems-6-sparc-gr712rc-smp-4.tar.xz -C /opt \
     && rm -f rtems-6-sparc-gr712rc-smp-4.tar.xz
 
 # Setup paths for the image end-user
-ENV PATH="/opt/rtems-6-sparc-gr712rc-smp-4/bin:/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
+ENV PATH="/opt/cpputest:/opt/rtems-6-sparc-gr712rc-smp-4/bin:/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
 
 # Execute tests to see if the image is valid
 RUN opengeode --help
@@ -92,3 +112,4 @@ RUN python3 -c "import opengeode"
 RUN asn1scc --version
 RUN black --version
 RUN cd /opt/rtems-6-sparc-gr712rc-smp-4/src/example && make
+RUN find /opt/cpputest/lib/libCppUTest.a
