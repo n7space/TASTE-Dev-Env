@@ -27,6 +27,7 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     build-essential \
     gcc \
     git \
+    libfl-dev \
     libglu1-mesa-dev \
     libncurses5 \
     libxkbcommon0 \
