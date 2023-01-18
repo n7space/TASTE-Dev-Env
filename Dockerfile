@@ -43,6 +43,7 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     python3-stringtemplate3 \
     spin \
     wget \
+    socat \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup python dependencies
