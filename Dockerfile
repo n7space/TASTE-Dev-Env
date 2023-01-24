@@ -101,7 +101,7 @@ RUN git clone --branch v4.0 --depth 1 https://github.com/cpputest/cpputest.git \
     && rm -rf cpputest
 
 # Download RTEMS
-RUN wget -q https://rtems-qual.io.esa.int/public_release/rtems-6-sparc-gr712rc-smp-4.tar.xz \
+RUN wget -q https://n7space-my.sharepoint.com/:u:/p/mkurowski/EQk4YxfVl3pImYIvWNTBtS8Bwk2emSjAVzbIKsbqCayXkw\?download\=1 -O rtems-6-sparc-gr712rc-smp-4.tar.xz \
     && tar -xf rtems-6-sparc-gr712rc-smp-4.tar.xz -C /opt \
     && rm -f rtems-6-sparc-gr712rc-smp-4.tar.xz
 
