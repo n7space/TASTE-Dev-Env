@@ -111,7 +111,8 @@ RUN git clone https://github.com/n7space/Spin.git \
     && cd Spin \
     && make \
     && mkdir -p /root/.local/bin/n7s-spin \
-    && cp Src/spin /root/.local/bin/n7s-spin
+    && cp Src/spin /root/.local/bin/n7s-spin \
+    && chmod 755 /root/.local/bin/n7s-spin
 
 # Setup paths for the image end-user
 ENV PATH="/opt/cpputest:/opt/rtems-6-sparc-gr712rc-smp-4/bin:/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
