@@ -103,7 +103,13 @@ RUN git clone --branch v4.0 --depth 1 https://github.com/cpputest/cpputest.git \
 # Download RTEMS
 RUN wget -q https://rtems-qual.io.esa.int/public_release/rtems-6-sparc-gr712rc-smp-4.tar.xz \
     && tar -xf rtems-6-sparc-gr712rc-smp-4.tar.xz -C /opt \
-    && rm -f rtems-6-sparc-gr712rc-smp-4.tar.xz
+	&& rm -f rtems-6-sparc-gr712rc-smp-4.tar.xz
+
+# Download and build n7s-spin
+RUN git clone https://github.com/n7space/Spin.git \
+	&& cd Spin
+	&& make
+    && cp Src/spin /root/.local/bin/n7s-spin
 
 # Setup paths for the image end-user
 ENV PATH="/opt/cpputest:/opt/rtems-6-sparc-gr712rc-smp-4/bin:/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
@@ -113,5 +119,6 @@ RUN opengeode --help
 RUN python3 -c "import opengeode"
 RUN asn1scc --version
 RUN black --version
+RUN n7s-spin -V
 RUN cd /opt/rtems-6-sparc-gr712rc-smp-4/src/example && make
 RUN find /opt/cpputest/lib/libCppUTest.a
