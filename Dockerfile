@@ -41,9 +41,10 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     python3-pygraphviz \
     python3-singledispatch \
     python3-stringtemplate3 \
-    spin \
+	spin \
     wget \
-    socat \
+	socat \
+	bison \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup python dependencies
@@ -103,7 +104,7 @@ RUN git clone --branch v4.0 --depth 1 https://github.com/cpputest/cpputest.git \
 # Download RTEMS
 RUN wget -q https://rtems-qual.io.esa.int/public_release/rtems-6-sparc-gr712rc-smp-4.tar.xz \
     && tar -xf rtems-6-sparc-gr712rc-smp-4.tar.xz -C /opt \
-	&& rm -f rtems-6-sparc-gr712rc-smp-4.tar.xz
+    && rm -f rtems-6-sparc-gr712rc-smp-4.tar.xz
 
 # Download and build n7s-spin
 RUN git clone https://github.com/n7space/Spin.git \
