@@ -41,10 +41,10 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     python3-pygraphviz \
     python3-singledispatch \
     python3-stringtemplate3 \
-	spin \
+    spin \
     wget \
-	socat \
-	bison \
+    socat \
+    bison \
     && rm -rf /var/lib/apt/lists/*
 
 # Setup python dependencies
