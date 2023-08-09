@@ -107,8 +107,8 @@ RUN wget -q https://rtems-qual.io.esa.int/public_release/rtems-6-sparc-gr712rc-s
 
 # Download and build n7s-spin
 RUN git clone https://github.com/n7space/Spin.git \
-    && cd Spin
-    && make
+    && cd Spin \
+    && make \
     && cp Src/spin /root/.local/bin/n7s-spin
 
 # Setup paths for the image end-user
