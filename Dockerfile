@@ -116,7 +116,7 @@ RUN git clone https://github.com/n7space/Spin.git \
     && cp Src/spin /opt/n7s-spin/n7s-spin
 
 # Setup paths for the image end-user
-ENV PATH="/opt/cpputest:/opt/n7s-spin:/opt/rtems-6-sparc-gr712rc-smp-4/bin:/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
+ENV PATH="/opt/cpputest:/opt/n7s-spin:/opt/rtems-6-sparc-gr712rc-smp-4/bin:/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net7.0/:${PATH}"
 
 # Execute tests to see if the image is valid
 RUN opengeode --help
