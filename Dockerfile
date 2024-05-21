@@ -2,7 +2,7 @@
 # Development/build environment #
 #-------------------------------#
 
-FROM  debian:11.2 as taste-dev-env
+FROM  debian:11.9 as taste-dev-env
 
 # Meta
 LABEL VENDOR="N7 Space"
@@ -71,7 +71,7 @@ RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod
 # Install .NET 5.0
 # This cannot be merged with the previous apt-get due to the need for wget
 RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
-    dotnet-sdk-6.0 \
+    dotnet-sdk-7.0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Compile asn1scc
