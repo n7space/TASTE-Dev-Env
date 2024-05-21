@@ -2,7 +2,7 @@
 # Development/build environment #
 #-------------------------------#
 
-FROM  debian:11.2 as taste-dev-env
+FROM  debian:11.9 as taste-dev-env
 
 # Meta
 LABEL VENDOR="N7 Space"
@@ -71,13 +71,15 @@ RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod
 # Install .NET 5.0
 # This cannot be merged with the previous apt-get due to the need for wget
 RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
-    dotnet-sdk-6.0 \
+    dotnet-sdk-7.0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Compile asn1scc
 RUN git clone https://github.com/maxime-esa/asn1scc.git \
     && cd asn1scc \
-    && git checkout 4.2.5.1f \
+    && git checkout 4.5.1.5 \
+    && dotnet build Antlr/ \
+    && dotnet build parseStg2/ \
     && dotnet build "asn1scc.sln"
 
 # Install opengeode
@@ -114,7 +116,7 @@ RUN git clone https://github.com/n7space/Spin.git \
     && cp Src/spin /opt/n7s-spin/n7s-spin
 
 # Setup paths for the image end-user
-ENV PATH="/opt/cpputest:/opt/n7s-spin:/opt/rtems-6-sparc-gr712rc-smp-4/bin:/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net6.0/:${PATH}"
+ENV PATH="/opt/cpputest:/opt/n7s-spin:/opt/rtems-6-sparc-gr712rc-smp-4/bin:/root/.local/bin:${WORKSPACE_DIR}/asn1scc/asn1scc/bin/Debug/net7.0/:${PATH}"
 
 # Execute tests to see if the image is valid
 RUN opengeode --help
