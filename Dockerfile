@@ -75,7 +75,7 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Compile asn1scc
-RUN git clone https://github.com/ttsiodras/asn1scc.git \
+RUN git clone https://github.com/maxime-esa/asn1scc.git \
     && cd asn1scc \
     && git checkout 4.2.5.1f \
     && dotnet build "asn1scc.sln"
