@@ -77,7 +77,7 @@ RUN apt-get update -q && apt-get install -q -y --no-install-recommends \
 # Compile asn1scc
 RUN git clone https://github.com/maxime-esa/asn1scc.git \
     && cd asn1scc \
-    && git checkout 4.2.5.1f \
+    && git checkout 4.5.1.5 \
     && dotnet build "asn1scc.sln"
 
 # Install opengeode
